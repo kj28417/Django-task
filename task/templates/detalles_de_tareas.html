@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+{% block content %}
+
+<main class="container">
+    <div class="row">
+        <div class="col-md-12">
+            <form method="POST" class="card card-body">
+                <h1 class="text-center">detalles de la tareas</h1>
+                {% csrf_token %}
+                <p>{{error}}</p>
+                <p>{{form.as_p}}</p>
+                {% if task.completada != None %}
+                <p><strong>Completada el: {{task.completada}}</strong></p>
+                {% endif %}
+                <div class="d-flex m-auto">
+                    {% if task.completada == None %}
+                    <button class="btn btn-secondary">
+                        actualizar
+                    </button>
+                    {% endif %}
+                </form>
+                {% if task.completada == None %}
+                <form action="{% url 'completada' task.id %}" method="POST">
+                    {% csrf_token %}
+                    <button class="btn btn-primary">
+                        completada
+                    </button>
+                </form>
+                {% endif %}
+                <form action="{% url 'borrar' task.id %}" method="POST">
+                    {% csrf_token %}
+                    <button class="btn btn-danger">
+                        borrar
+                    </button>
+                </form>
+                <button class="btn btn-info"><a href="{% url 'tareas' %}" class="text-reset"> Atras </a></button>
+                </div>
+        </div>
+    </div>
+</main>
+
+{% endblock %}
